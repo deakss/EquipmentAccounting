@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace EquipmentAccounting
+namespace EquipmentAccounting.Forms
 {
-    public partial class Form1 : Form
+    public partial class OperationsForm : Form
     {
-        public Form1()
+        public OperationsForm()
         {
             InitializeComponent();
         }
