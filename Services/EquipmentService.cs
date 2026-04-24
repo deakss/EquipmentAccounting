@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EquipmentAccounting.Data
+namespace EquipmentAccounting.Services
 {
-    internal class DbConnection
+    internal class EquipmentService
     {
     }
 }

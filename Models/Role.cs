@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace EquipmentAccounting.Models
 {
-    internal class Role
+    public class Role
     {
+        public int RoleID { get; set; }
+        public string Name { get; set; }
     }
 }
