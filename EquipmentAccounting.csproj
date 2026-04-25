@@ -101,6 +101,9 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\EquipmentService.cs" />
     <Compile Include="Services\OperationService.cs" />
+    <EmbeddedResource Include="Forms\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

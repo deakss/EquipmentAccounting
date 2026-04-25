@@ -16,5 +16,10 @@ namespace EquipmentAccounting.Forms
         {
             InitializeComponent();
         }
+
+        private void LoginBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
