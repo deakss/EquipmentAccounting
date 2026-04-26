@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EquipmentAccounting.Helpers;
+using EquipmentAccounting.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static EquipmentAccounting.Services.AuthService;
 
 namespace EquipmentAccounting.Forms
 {
@@ -17,9 +20,33 @@ namespace EquipmentAccounting.Forms
             InitializeComponent();
         }
 
-        private void LoginBox_TextChanged(object sender, EventArgs e)
+        private void BtnLogin_Click(object sender, EventArgs e)
         {
+            string login = LoginBox.Text;
+            string password = PasswordBox.Text;
 
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Введите логин и пароль");
+                return;
+            }
+
+            var authService = new AuthService();
+            var user = authService.Login(login, password);
+
+            if (user != null)
+            {
+                MessageBox.Show("Вход выполнен");
+
+                var mainForm = new MainForm(user);
+                mainForm.Show();
+
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Неверный логин или пароль");
+            }
         }
     }
 }

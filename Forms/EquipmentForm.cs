@@ -15,6 +15,26 @@ namespace EquipmentAccounting.Forms
         public EquipmentForm()
         {
             InitializeComponent();
+
+            toolStripButtonEquipment.Enabled = false;
+        }
+
+        private void toolStripButtonMenu_Click(object sender, EventArgs e)
+        {
+            var mainForm = new MainForm();
+            mainForm.Show();
+        }
+
+        private void toolStripButtonOperations_Click(object sender, EventArgs e)
+        {
+            var operationsForm = new OperationsForm();
+            operationsForm.Show();
+        }
+
+        private void toolStripButtonUsers_Click(object sender, EventArgs e)
+        {
+            var employeesForm = new EmployeesForm();
+            employeesForm.Show();
         }
     }
 }
