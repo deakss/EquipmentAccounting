@@ -37,6 +37,8 @@
             this.toolStripButtonEquipment = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonUsers = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelUser = new System.Windows.Forms.ToolStripLabel();
             this.GroupBoxAdmin = new System.Windows.Forms.GroupBox();
             this.DataGridLastOps = new System.Windows.Forms.DataGridView();
@@ -52,8 +54,6 @@
             this.toolStripButtonMoveEquip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonFixEquip = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripNavBar.SuspendLayout();
             this.GroupBoxAdmin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridLastOps)).BeginInit();
@@ -130,6 +130,23 @@
             this.toolStripButtonUsers.Size = new System.Drawing.Size(105, 22);
             this.toolStripButtonUsers.Text = "Пользователи";
             this.toolStripButtonUsers.Click += new System.EventHandler(this.toolStripButtonUsers_Click);
+            // 
+            // toolStripButtonExit
+            // 
+            this.toolStripButtonExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonExit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExit.Image")));
+            this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonExit.Name = "toolStripButtonExit";
+            this.toolStripButtonExit.Size = new System.Drawing.Size(46, 22);
+            this.toolStripButtonExit.Text = "Выйти";
+            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripLabelUser
             // 
@@ -241,6 +258,7 @@
             this.toolStripButtonAddEquip.Name = "toolStripButtonAddEquip";
             this.toolStripButtonAddEquip.Size = new System.Drawing.Size(161, 22);
             this.toolStripButtonAddEquip.Text = "Добавить оборудование";
+            this.toolStripButtonAddEquip.Click += new System.EventHandler(this.toolStripButtonAddEquip_Click);
             // 
             // toolStripSeparator4
             // 
@@ -255,6 +273,7 @@
             this.toolStripButtonMoveEquip.Name = "toolStripButtonMoveEquip";
             this.toolStripButtonMoveEquip.Size = new System.Drawing.Size(99, 22);
             this.toolStripButtonMoveEquip.Text = "Переместить";
+            this.toolStripButtonMoveEquip.Click += new System.EventHandler(this.toolStripButtonMoveEquip_Click);
             // 
             // toolStripSeparator5
             // 
@@ -269,23 +288,7 @@
             this.toolStripButtonFixEquip.Name = "toolStripButtonFixEquip";
             this.toolStripButtonFixEquip.Size = new System.Drawing.Size(68, 22);
             this.toolStripButtonFixEquip.Text = "Ремонт";
-            // 
-            // toolStripButtonExit
-            // 
-            this.toolStripButtonExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonExit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExit.Image")));
-            this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonExit.Name = "toolStripButtonExit";
-            this.toolStripButtonExit.Size = new System.Drawing.Size(46, 22);
-            this.toolStripButtonExit.Text = "Выйти";
-            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+            this.toolStripButtonFixEquip.Click += new System.EventHandler(this.toolStripButtonFixEquip_Click);
             // 
             // MainForm
             // 

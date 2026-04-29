@@ -10,6 +10,26 @@ namespace EquipmentAccounting.Services
     {
         // ================= EQUIPMENT =================
 
+        public int GetTotalEquipmentCount()
+        {
+            object result = DbHelper.ExecuteScalar("SELECT COUNT(*) FROM Equipment");
+            return Convert.ToInt32(result);
+        }
+
+        public int GetEquipmentCountByStatus(string statusName)
+        {
+            string query = @"
+        SELECT COUNT(*)
+        FROM Equipment e
+        INNER JOIN Statuses s ON e.StatusID = s.StatusID
+        WHERE s.Name = @StatusName";
+
+            object result = DbHelper.ExecuteScalar(query,
+                new SqlParameter("@StatusName", statusName));
+
+            return Convert.ToInt32(result);
+        }
+
         public DataTable GetEquipment()
         {
             string query = @"

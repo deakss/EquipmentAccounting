@@ -142,8 +142,7 @@ namespace EquipmentAccounting.Forms
                     PurchaseDate = dateTimePickerPurchaseDate.Value,
                     Cost = cost,
                     Description = string.IsNullOrWhiteSpace(richTextBoxDescription.Text)
-                        ? null
-                        : richTextBoxDescription.Text
+                        ? richTextBoxDescription.Text : null
                 };
 
                 DialogResult = DialogResult.OK;

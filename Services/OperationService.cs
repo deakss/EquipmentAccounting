@@ -44,6 +44,40 @@ namespace EquipmentAccounting.Services
                 ORDER BY Name");
         }
 
+        public DataTable GetLastOperations(int count = 5)
+        {
+            string query = @"
+        SELECT TOP (@Count)
+            o.OperationDate,
+            ot.Name AS OperationTypeName,
+            e.Name AS EquipmentName,
+            emp.FullName AS EmployeeName,
+            d1.Name AS FromDepartmentName,
+            d2.Name AS ToDepartmentName,
+            o.Comment
+        FROM Operations o
+        INNER JOIN OperationTypes ot ON o.OperationTypeID = ot.OperationTypeID
+        INNER JOIN Equipment e ON o.EquipmentID = e.EquipmentID
+        LEFT JOIN Employees emp ON o.EmployeeID = emp.EmployeeID
+        LEFT JOIN Departments d1 ON o.FromDepartmentID = d1.DepartmentID
+        LEFT JOIN Departments d2 ON o.ToDepartmentID = d2.DepartmentID
+        ORDER BY o.OperationDate DESC, o.OperationID DESC";
+
+            return DbHelper.ExecuteQuery(query,
+                new SqlParameter("@Count", count));
+        }
+
+        public int GetOperationTypeIdByName(string name)
+        {
+            object result = DbHelper.ExecuteScalar(@"
+        SELECT OperationTypeID
+        FROM OperationTypes
+        WHERE Name = @Name",
+                new SqlParameter("@Name", name));
+
+            return Convert.ToInt32(result);
+        }
+
         public DataTable GetOperationTypes()
         {
             return DbHelper.ExecuteQuery("SELECT * FROM OperationTypes ORDER BY Name");
@@ -214,6 +248,10 @@ namespace EquipmentAccounting.Services
                 case "Передача в ремонт":
                     statusId = GetStatusIdByName("В ремонте");
                     employeeId = null;
+
+                    if (operation.ToDepartmentID.HasValue)
+                        departmentId = operation.ToDepartmentID.Value;
+
                     break;
 
                 case "Возврат из ремонта":
@@ -268,6 +306,17 @@ namespace EquipmentAccounting.Services
                 FROM Employees
                 WHERE EmployeeID = @EmployeeID",
                 new SqlParameter("@EmployeeID", employeeId));
+
+            return Convert.ToInt32(result);
+        }
+
+        public int GetRepairDepartmentId()
+        {
+            object result = DbHelper.ExecuteScalar(@"
+        SELECT DepartmentID
+        FROM Departments
+        WHERE Name = @name",
+                new SqlParameter("@name", "Технический отдел"));
 
             return Convert.ToInt32(result);
         }

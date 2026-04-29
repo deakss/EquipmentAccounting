@@ -116,6 +116,12 @@
     <Compile Include="Forms\EquipmentForm.Designer.cs">
       <DependentUpon>EquipmentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FixEquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FixEquipmentForm.Designer.cs">
+      <DependentUpon>FixEquipmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,12 @@
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MoveEquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MoveEquipmentForm.Designer.cs">
+      <DependentUpon>MoveEquipmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\OperationsForm.cs">
       <SubType>Form</SubType>
@@ -183,11 +195,17 @@
     <EmbeddedResource Include="Forms\EquipmentForm.resx">
       <DependentUpon>EquipmentForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FixEquipmentForm.resx">
+      <DependentUpon>FixEquipmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MoveEquipmentForm.resx">
+      <DependentUpon>MoveEquipmentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OperationsForm.resx">
       <DependentUpon>OperationsForm.cs</DependentUpon>
