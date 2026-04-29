@@ -32,34 +32,19 @@ namespace EquipmentAccounting.Forms
 
         public AddEditUserForm(User user) : this()
         {
-            LoadEmployees();
-            LoadRoles();
             isEdit = true;
             buttonAddUser.Text = "Сохранить";
 
             User = user;
 
             textBoxLogin.Text = user.Login;
-            comboBoxRole.SelectedValue = user.RoleID;
-            comboBoxEmployee.SelectedValue = user.EmployeeID;
-            
-            if (user.EmployeeID.HasValue)
-            {
-                comboBoxEmployee.SelectedValue = user.EmployeeID.Value;
-            }
-            else
-            {
-                comboBoxEmployee.SelectedIndex = -1;
-            }
 
-            if (user.RoleID.HasValue)
-            {
-                comboBoxRole.SelectedValue = user.RoleID.Value;
-            }
+            if (user.EmployeeID.HasValue)
+                comboBoxEmployee.SelectedValue = user.EmployeeID.Value;
             else
-            {
-                comboBoxRole.SelectedIndex = -1;
-            }
+                comboBoxEmployee.SelectedIndex = -1;
+
+            comboBoxRole.SelectedValue = user.RoleID;
         }
 
         private void LoadRoles()
@@ -95,9 +80,11 @@ namespace EquipmentAccounting.Forms
             User = new User
             {
                 UserID = isEdit ? User.UserID : 0,
-                Login = textBoxPassword.Text,
-                RoleID = (int)comboBoxRole.SelectedIndex + 1,
-                EmployeeID = (int)comboBoxEmployee.SelectedIndex + 1
+                Login = textBoxLogin.Text,
+                RoleID = (int)comboBoxRole.SelectedValue,
+                EmployeeID = comboBoxEmployee.SelectedValue == null || comboBoxEmployee.SelectedValue == DBNull.Value
+                    ? null
+                    : (int?)comboBoxEmployee.SelectedValue
             };
 
             DialogResult = DialogResult.OK;

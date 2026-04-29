@@ -146,6 +146,7 @@
     <Compile Include="Forms\OperationsForm.Designer.cs">
       <DependentUpon>OperationsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GridHelper.cs" />
     <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Department.cs" />
