@@ -197,6 +197,7 @@
             this.toolStripButtonAddOperations.Name = "toolStripButtonAddOperations";
             this.toolStripButtonAddOperations.Size = new System.Drawing.Size(86, 22);
             this.toolStripButtonAddOperations.Text = "Добавить";
+            this.toolStripButtonAddOperations.Click += new System.EventHandler(this.toolStripButtonAddOperation_Click);
             // 
             // toolStripSeparator4
             // 
@@ -211,6 +212,7 @@
             this.toolStripButtonEditOperations.Name = "toolStripButtonEditOperations";
             this.toolStripButtonEditOperations.Size = new System.Drawing.Size(119, 22);
             this.toolStripButtonEditOperations.Text = "Редактировать";
+            this.toolStripButtonEditOperations.Click += new System.EventHandler(this.toolStripButtonEditOperation_Click);
             // 
             // toolStripSeparator5
             // 
@@ -225,6 +227,7 @@
             this.toolStripButtonDelOperations.Name = "toolStripButtonDelOperations";
             this.toolStripButtonDelOperations.Size = new System.Drawing.Size(78, 22);
             this.toolStripButtonDelOperations.Text = "Удалить";
+            this.toolStripButtonDelOperations.Click += new System.EventHandler(this.toolStripButtonDelOperation_Click);
             // 
             // dataGridViewOperations
             // 
@@ -277,6 +280,7 @@
             this.toolStripButtonAddOperationType.Name = "toolStripButtonAddOperationType";
             this.toolStripButtonAddOperationType.Size = new System.Drawing.Size(86, 22);
             this.toolStripButtonAddOperationType.Text = "Добавить";
+            this.toolStripButtonAddOperationType.Click += new System.EventHandler(this.toolStripButtonAddOperationType_Click);
             // 
             // toolStripSeparator6
             // 
@@ -291,6 +295,7 @@
             this.toolStripButtonEditOperationType.Name = "toolStripButtonEditOperationType";
             this.toolStripButtonEditOperationType.Size = new System.Drawing.Size(119, 22);
             this.toolStripButtonEditOperationType.Text = "Редактировать";
+            this.toolStripButtonEditOperationType.Click += new System.EventHandler(this.toolStripButtonEditOperationType_Click);
             // 
             // toolStripSeparator7
             // 
@@ -305,6 +310,7 @@
             this.toolStripButtonDelOperationType.Name = "toolStripButtonDelOperationType";
             this.toolStripButtonDelOperationType.Size = new System.Drawing.Size(78, 22);
             this.toolStripButtonDelOperationType.Text = "Удалить";
+            this.toolStripButtonDelOperationType.Click += new System.EventHandler(this.toolStripButtonDelOperationType_Click);
             // 
             // dataGridViewOperationTypes
             // 
