@@ -37,11 +37,13 @@ namespace EquipmentAccounting.Forms
             if (user != null)
             {
                 MessageBox.Show("Вход выполнен");
+                
+                this.Hide();
 
                 var mainForm = new MainForm(user);
-                mainForm.Show();
+                mainForm.ShowDialog();
 
-                this.Hide();
+                this.Close();
             }
             else
             {

@@ -3,13 +3,12 @@ using System.Data;
 using System.Windows.Forms;
 using EquipmentAccounting.Models;
 using EquipmentAccounting.Services;
-using Microsoft.VisualBasic;
 
 namespace EquipmentAccounting.Forms
 {
     public partial class EmployeesForm : Form
     {
-        private readonly User _currentUser;
+        private readonly User   _currentUser;
         private readonly EmployeeService _service = new EmployeeService();
 
         public EmployeesForm(User currentUser)
@@ -22,6 +21,7 @@ namespace EquipmentAccounting.Forms
         private void EmployeesForm_Load(object sender, EventArgs e)
         {
             toolStripLabelUser.Text = $"Пользователь: {_currentUser.Login}";
+            toolStripButtonUsers.Enabled = false;
 
             SetupGrid(dataGridViewUsers);
             SetupGrid(dataGridViewEmployees);
@@ -29,6 +29,7 @@ namespace EquipmentAccounting.Forms
             SetupGrid(dataGridViewRoles);
 
             ReloadAllTables();
+
         }
 
         // Настройка DataGridView для отображения данных
@@ -79,380 +80,299 @@ namespace EquipmentAccounting.Forms
             return grid.CurrentRow?.DataBoundItem as DataRowView;
         }
 
-        
-        private string Prompt(string caption, string text, string defaultValue = "")
-        {
-            return Interaction.InputBox(text, caption, defaultValue).Trim();
-        }
-
-        private int PromptInt(string caption, string text, string defaultValue = "")
-        {
-            while (true)
-            {
-                string value = Prompt(caption, text, defaultValue);
-
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new OperationCanceledException();
-
-                if (int.TryParse(value, out int result))
-                    return result;
-
-                MessageBox.Show("Введите корректное целое число.");
-                defaultValue = value;
-            }
-        }
-
-        private int? PromptNullableInt(string caption, string text, string defaultValue = "")
-        {
-            string value = Prompt(caption, text, defaultValue);
-
-            if (string.IsNullOrWhiteSpace(value))
-                return null;
-
-            if (int.TryParse(value, out int result))
-                return result;
-
-            MessageBox.Show("Введите корректное целое число.");
-            return PromptNullableInt(caption, text, defaultValue);
-        }
-
         private void toolStripButtonMenu_Click(object sender, EventArgs e)
         {
-            var mainForm = new MainForm();
-            mainForm.Show();
+            this.Hide();
+            var mainForm = new MainForm(_currentUser);
+            mainForm.ShowDialog();
+            this.Close();
         }
 
         private void toolStripButtonOperations_Click(object sender, EventArgs e)
         {
-            var operationsForm = new OperationsForm();
-            operationsForm.Show();
+            this.Hide();
+            var operationsForm = new OperationsForm(_currentUser);
+            operationsForm.ShowDialog();
+            this.Close();
         }
 
         private void toolStripButtonEquipment_Click(object sender, EventArgs e)
         {
-            var equipmentForm = new EquipmentForm();
-            equipmentForm.Show();
+            this.Hide();
+            var equipmentForm = new EquipmentForm(_currentUser);
+            equipmentForm.ShowDialog();
+            this.Close();
+        }
+
+        // Метод для содержания кода try в одном месте
+        private void ExecuteWithTry(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // ===================== USERS =====================
 
         private void toolStripButtonAddUser_Click(object sender, EventArgs e)
         {
-            try
+            ExecuteWithTry(() =>
             {
-                string login = Prompt("Добавление пользователя", "Логин:");
-                if (string.IsNullOrWhiteSpace(login)) return;
+                var form = new AddEditUserForm();
 
-                string password = Prompt("Добавление пользователя", "Пароль:");
-                if (string.IsNullOrWhiteSpace(password)) return;
-
-                int roleId = PromptInt("Добавление пользователя", "ID роли:");
-                int? employeeId = PromptNullableInt("Добавление пользователя", "ID сотрудника (если нет — оставьте пустым):");
-
-                _service.AddUser(new User
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    Login = login,
-                    RoleID = roleId,
-                    EmployeeID = employeeId
-                }, password);
-
-                LoadUsers();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка добавления пользователя:\n" + ex.Message);
-            }
+                    _service.AddUser(form.User, form.Password);
+                    LoadUsers();
+                }
+            });
         }
 
         private void toolStripButtonEditUser_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewUsers);
-            if (row == null)
+            ExecuteWithTry(() =>
             {
-                MessageBox.Show("Выберите пользователя.");
-                return;
-            }
-
-            try
-            {
-                int userId = Convert.ToInt32(row["UserID"]);
-                string login = Prompt("Редактирование пользователя", "Логин:", row["Login"].ToString());
-                if (string.IsNullOrWhiteSpace(login)) return;
-
-                string password = Prompt("Редактирование пользователя", "Новый пароль (оставьте пустым, чтобы не менять):");
-                int roleId = PromptInt("Редактирование пользователя", "ID роли:", row["RoleID"].ToString());
-                int? employeeId = row["EmployeeID"] == DBNull.Value
-                    ? PromptNullableInt("Редактирование пользователя", "ID сотрудника (если нет — оставьте пустым):")
-                    : PromptNullableInt("Редактирование пользователя", "ID сотрудника (если нет — оставьте пустым):", row["EmployeeID"].ToString());
-
-                _service.UpdateUser(new User
+                var row = GetSelectedRow(dataGridViewUsers);
+                if (row == null)
                 {
-                    UserID = userId,
-                    Login = login,
-                    RoleID = roleId,
-                    EmployeeID = employeeId
-                }, password);
+                    MessageBox.Show("Выберите пользователя");
+                    return;
+                }
 
-                LoadUsers();
-            }
-            catch (OperationCanceledException)
-            {
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка редактирования пользователя:\n" + ex.Message);
-            }
+                var user = new User
+                {
+                    UserID = (int)row["UserID"],
+                    Login = row["Login"].ToString(),
+                    RoleID = (int)row["RoleID"],
+                    EmployeeID = row["EmployeeID"] == DBNull.Value
+                        ? null
+                        : (int?)row["EmployeeID"]
+                };
+
+                var form = new AddEditUserForm(user);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _service.UpdateUser(form.User, form.Password);
+                    LoadUsers();
+                }
+            });
         }
 
         private void toolStripButtonDelUser_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewUsers);
-            if (row == null)
+            ExecuteWithTry(() =>
             {
-                MessageBox.Show("Выберите пользователя.");
-                return;
-            }
+                var row = GetSelectedRow(dataGridViewUsers);
+                if (row == null)
+                {
+                    MessageBox.Show("Выберите пользователя");
+                    return;
+                }
 
-            if (MessageBox.Show("Удалить пользователя?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
+                int id = (int)row["UserID"];
 
-            try
-            {
-                int userId = Convert.ToInt32(row["UserID"]);
-                _service.DeleteUser(userId);
-                LoadUsers();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка удаления пользователя:\n" + ex.Message);
-            }
+                if (MessageBox.Show("Удалить пользователя?", "Подтверждение",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    _service.DeleteUser(id);
+                    LoadUsers();
+                }
+            });
         }
+
+        // ===================== EMPLOYEES =====================
 
         // ===================== EMPLOYEES =====================
 
         private void toolStripButtonAddEmployees_Click(object sender, EventArgs e)
         {
-            try
+            ExecuteWithTry(() =>
             {
-                string fullName = Prompt("Добавление сотрудника", "ФИО:");
-                if (string.IsNullOrWhiteSpace(fullName)) return;
+                var form = new AddEditEmployeeForm();
 
-                string position = Prompt("Добавление сотрудника", "Должность:");
-                int departmentId = PromptInt("Добавление сотрудника", "ID подразделения:");
-
-                _service.AddEmployee(new Employee
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    FullName = fullName,
-                    Position = position,
-                    DepartmentID = departmentId
-                });
-
-                LoadEmployees();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка добавления сотрудника:\n" + ex.Message);
-            }
+                    _service.AddEmployee(form.Employee);
+                    LoadEmployees();
+                }
+            });
         }
 
         private void toolStripButtonEditEmployees_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewEmployees);
-            if (row == null)
+            ExecuteWithTry(() =>
             {
-                MessageBox.Show("Выберите сотрудника.");
-                return;
-            }
-
-            try
-            {
-                int employeeId = Convert.ToInt32(row["EmployeeID"]);
-                string fullName = Prompt("Редактирование сотрудника", "ФИО:", row["FullName"].ToString());
-                if (string.IsNullOrWhiteSpace(fullName)) return;
-
-                string position = Prompt("Редактирование сотрудника", "Должность:", row["Position"].ToString());
-                int departmentId = PromptInt("Редактирование сотрудника", "ID подразделения:", row["DepartmentID"].ToString());
-
-                _service.UpdateEmployee(new Employee
+                var row = GetSelectedRow(dataGridViewEmployees);
+                if (row == null)
                 {
-                    EmployeeID = employeeId,
-                    FullName = fullName,
-                    Position = position,
-                    DepartmentID = departmentId
-                });
+                    MessageBox.Show("Выберите сотрудника");
+                    return;
+                }
 
-                LoadEmployees();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка редактирования сотрудника:\n" + ex.Message);
-            }
+                var employee = new Employee
+                {
+                    EmployeeID = (int)row["EmployeeID"],
+                    FullName = row["FullName"].ToString(),
+                    Position = row["Position"].ToString(),
+                    DepartmentID = (int)row["DepartmentID"]
+                };
+
+                var form = new AddEditEmployeeForm(employee);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _service.UpdateEmployee(form.Employee);
+                    LoadEmployees();
+                }
+            });
         }
 
         private void toolStripButtonDelEmployees_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewEmployees);
-            if (row == null)
+            ExecuteWithTry(() =>
             {
-                MessageBox.Show("Выберите сотрудника.");
-                return;
-            }
+                var row = GetSelectedRow(dataGridViewEmployees);
+                if (row == null)
+                {
+                    MessageBox.Show("Выберите сотрудника");
+                    return;
+                }
 
-            if (MessageBox.Show("Удалить сотрудника?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
+                int id = (int)row["EmployeeID"];
 
-            try
-            {
-                int employeeId = Convert.ToInt32(row["EmployeeID"]);
-                _service.DeleteEmployee(employeeId);
-                LoadEmployees();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка удаления сотрудника:\n" + ex.Message);
-            }
+                if (MessageBox.Show("Удалить сотрудника?", "Подтверждение",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    _service.DeleteEmployee(id);
+                    LoadEmployees();
+                }
+            });
         }
 
         // ===================== DEPARTMENTS =====================
 
         private void toolStripButtonAddDepartments_Click(object sender, EventArgs e)
         {
-            try
+            ExecuteWithTry(() =>
             {
-                string name = Prompt("Добавление подразделения", "Название подразделения:");
-                if (string.IsNullOrWhiteSpace(name)) return;
+                var form = new AddEditDepartmentForm();
 
-                _service.AddDepartment(new Department { Name = name });
-                LoadDepartments();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка добавления подразделения:\n" + ex.Message);
-            }
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _service.AddDepartment(form.Department);
+                    LoadDepartments();
+                }
+            });
         }
 
         private void toolStripButtonEditDepartments_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewDepartments);
-            if (row == null)
+            ExecuteWithTry(() =>
             {
-                MessageBox.Show("Выберите подразделение.");
-                return;
-            }
+                var row = GetSelectedRow(dataGridViewDepartments);
+                if (row == null) return;
 
-            try
-            {
-                int departmentId = Convert.ToInt32(row["DepartmentID"]);
-                string name = Prompt("Редактирование подразделения", "Название подразделения:", row["Name"].ToString());
-                if (string.IsNullOrWhiteSpace(name)) return;
-
-                _service.UpdateDepartment(new Department
+                var department = new Department
                 {
-                    DepartmentID = departmentId,
-                    Name = name
-                });
+                    DepartmentID = (int)row["DepartmentID"],
+                    Name = row["Name"].ToString(),
+                };
 
-                LoadDepartments();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка редактирования подразделения:\n" + ex.Message);
-            }
+                var form = new AddEditDepartmentForm(department);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _service.UpdateDepartment(form.Department);
+                    LoadDepartments();
+                }
+            });
         }
 
         private void toolStripButtonDelDepartments_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewDepartments);
-            if (row == null)
+            ExecuteWithTry(() =>
             {
-                MessageBox.Show("Выберите подразделение.");
-                return;
-            }
+                var row = GetSelectedRow(dataGridViewDepartments);
+                if (row == null)
+                {
+                    MessageBox.Show("Выберите подразделение.");
+                    return;
+                }
 
-            if (MessageBox.Show("Удалить подразделение?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
+                if (MessageBox.Show("Удалить подразделение?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    return;
 
-            try
-            {
                 int departmentId = Convert.ToInt32(row["DepartmentID"]);
                 _service.DeleteDepartment(departmentId);
                 LoadDepartments();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка удаления подразделения:\n" + ex.Message);
-            }
+            });
         }
 
         // ===================== ROLES =====================
 
         private void toolStripButtonAddRoles_Click(object sender, EventArgs e)
         {
-            try
+            ExecuteWithTry(() =>
             {
-                string name = Prompt("Добавление роли", "Название роли:");
-                if (string.IsNullOrWhiteSpace(name)) return;
+                var form = new AddEditRoleForm();
 
-                _service.AddRole(new Role { Name = name });
-                LoadRoles();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка добавления роли:\n" + ex.Message);
-            }
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _service.AddRole(form.Role);
+                    LoadRoles();
+                }
+            });
         }
 
         private void toolStripButtonEditRoles_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewRoles);
-            if (row == null)
+            ExecuteWithTry(() =>
             {
-                MessageBox.Show("Выберите роль.");
-                return;
-            }
+                var row = GetSelectedRow(dataGridViewRoles);
+                if (row == null) return;
 
-            try
-            {
-                int roleId = Convert.ToInt32(row["RoleID"]);
-                string name = Prompt("Редактирование роли", "Название роли:", row["Name"].ToString());
-                if (string.IsNullOrWhiteSpace(name)) return;
-
-                _service.UpdateRole(new Role
+                var role = new Role
                 {
-                    RoleID = roleId,
-                    Name = name
-                });
+                    RoleID = (int)row["RoleID"],
+                    Name = row["Name"].ToString(),
+                };
 
-                LoadRoles();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка редактирования роли:\n" + ex.Message);
-            }
+                var form = new AddEditRoleForm(role);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _service.UpdateRole(form.Role);
+                    LoadRoles();
+                }
+            });
         }
 
         private void toolStripButtonDelRoles_Click(object sender, EventArgs e)
         {
-            var row = GetSelectedRow(dataGridViewRoles);
-            if (row == null)
-            {
-                MessageBox.Show("Выберите роль.");
-                return;
-            }
 
-            if (MessageBox.Show("Удалить роль?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
-
-            try
+            ExecuteWithTry(() =>
             {
+                var row = GetSelectedRow(dataGridViewRoles);
+                if (row == null)
+                {
+                    MessageBox.Show("Выберите роль.");
+                    return;
+                }
+
+                if (MessageBox.Show("Удалить роль?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    return;
+
                 int roleId = Convert.ToInt32(row["RoleID"]);
                 _service.DeleteRole(roleId);
                 LoadRoles();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка удаления роли:\n" + ex.Message);
-            }
+            });
         }
     }
 }

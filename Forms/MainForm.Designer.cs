@@ -167,7 +167,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 21);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(775, 35);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
@@ -176,34 +176,34 @@
             this.labelTotalEquip.AutoSize = true;
             this.labelTotalEquip.Location = new System.Drawing.Point(13, 10);
             this.labelTotalEquip.Name = "labelTotalEquip";
-            this.labelTotalEquip.Size = new System.Drawing.Size(115, 13);
+            this.labelTotalEquip.Size = new System.Drawing.Size(133, 15);
             this.labelTotalEquip.TabIndex = 0;
             this.labelTotalEquip.Text = "Всего оборудования:";
             // 
             // labelEquipInOper
             // 
             this.labelEquipInOper.AutoSize = true;
-            this.labelEquipInOper.Location = new System.Drawing.Point(134, 10);
+            this.labelEquipInOper.Location = new System.Drawing.Point(152, 10);
             this.labelEquipInOper.Name = "labelEquipInOper";
-            this.labelEquipInOper.Size = new System.Drawing.Size(55, 13);
+            this.labelEquipInOper.Size = new System.Drawing.Size(61, 15);
             this.labelEquipInOper.TabIndex = 1;
             this.labelEquipInOper.Text = "В работе:";
             // 
             // labelEquipFix
             // 
             this.labelEquipFix.AutoSize = true;
-            this.labelEquipFix.Location = new System.Drawing.Point(195, 10);
+            this.labelEquipFix.Location = new System.Drawing.Point(219, 10);
             this.labelEquipFix.Name = "labelEquipFix";
-            this.labelEquipFix.Size = new System.Drawing.Size(63, 13);
+            this.labelEquipFix.Size = new System.Drawing.Size(72, 15);
             this.labelEquipFix.TabIndex = 2;
             this.labelEquipFix.Text = "В ремонте:";
             // 
             // labelEquipDismissed
             // 
             this.labelEquipDismissed.AutoSize = true;
-            this.labelEquipDismissed.Location = new System.Drawing.Point(264, 10);
+            this.labelEquipDismissed.Location = new System.Drawing.Point(297, 10);
             this.labelEquipDismissed.Name = "labelEquipDismissed";
-            this.labelEquipDismissed.Size = new System.Drawing.Size(53, 13);
+            this.labelEquipDismissed.Size = new System.Drawing.Size(63, 15);
             this.labelEquipDismissed.TabIndex = 3;
             this.labelEquipDismissed.Text = "Списано:";
             // 
@@ -268,15 +268,15 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.toolStripFastActions);
             this.Controls.Add(this.GroupBoxAdmin);
             this.Controls.Add(this.toolStripNavBar);
-            this.Font = new System.Drawing.Font("Roboto", 8.25F);
+            this.Font = new System.Drawing.Font("Roboto", 9.25F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Главное меню";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStripNavBar.ResumeLayout(false);

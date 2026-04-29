@@ -32,6 +32,8 @@ namespace EquipmentAccounting
                 toolStripButtonUsers.Visible = false;
                 GroupBoxAdmin.Visible = false;
                 toolStripFastActions.Visible = false;
+                toolStripSeparator1.Visible = false;
+                toolStripSeparator2.Visible = false;
             }
         }
 
@@ -45,30 +47,39 @@ namespace EquipmentAccounting
                 toolStripButtonUsers.Visible = false;
                 GroupBoxAdmin.Visible = false;
                 toolStripFastActions.Visible = false;
+                toolStripSeparator1.Visible = false;
+                toolStripSeparator2.Visible = false;
             }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            toolStripLabelUser.Text = $"Пользователь: {_currentUser.Login}";
             toolStripButtonMenu.Enabled = false;
         }
 
         private void toolStripButtonOperations_Click(object sender, EventArgs e)
         {
-            var operationsForm = new OperationsForm();
-            operationsForm.Show();
+            this.Hide();
+            var operationsForm = new OperationsForm(_currentUser);
+            this.Close();
+            operationsForm.ShowDialog();
         }
 
         private void toolStripButtonEquipment_Click(object sender, EventArgs e)
         {
-            var equipmentForm = new EquipmentForm();
-            equipmentForm.Show();
+            this.Hide();
+            var equipmentForm = new EquipmentForm(_currentUser);
+            this.Close();
+            equipmentForm.ShowDialog();
         }
 
         private void toolStripButtonUsers_Click(object sender, EventArgs e)
         {
-            var employeesForm = new EmployeesForm();
-            employeesForm.Show();
+            this.Hide();
+            var employeesForm = new EmployeesForm(_currentUser);
+            employeesForm.ShowDialog();
+            this.Close();
         }
     }
 }

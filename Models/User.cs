@@ -11,7 +11,7 @@ namespace EquipmentAccounting.Models
         public int UserID { get; set; }
         public string Login { get; set; }
         public string PasswordHash { get; set; }
-        public int RoleID { get; set; }
+        public int? RoleID { get; set; }
         public int? EmployeeID { get; set; }
     }
 }

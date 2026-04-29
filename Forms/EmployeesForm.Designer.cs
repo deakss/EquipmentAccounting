@@ -514,14 +514,16 @@
             // 
             // EmployeesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControlUsers);
             this.Controls.Add(this.toolStripNavBar);
+            this.Font = new System.Drawing.Font("Roboto", 9.75F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EmployeesForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Пользователи и сотрудники";
+            this.Load += new System.EventHandler(this.EmployeesForm_Load);
             this.toolStripNavBar.ResumeLayout(false);
             this.toolStripNavBar.PerformLayout();
             this.tabControlUsers.ResumeLayout(false);

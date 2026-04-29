@@ -50,11 +50,59 @@
   <ItemGroup>
     <Compile Include="Data\DbConnectionHelper.cs" />
     <Compile Include="Data\DbHelper.cs" />
-    <Compile Include="Forms\AddEditEquipment.cs">
+    <Compile Include="Forms\AddEditOperationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddEditEquipment.Designer.cs">
-      <DependentUpon>AddEditEquipment.cs</DependentUpon>
+    <Compile Include="Forms\AddEditOperationForm.Designer.cs">
+      <DependentUpon>AddEditOperationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditStatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditStatusForm.Designer.cs">
+      <DependentUpon>AddEditStatusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditCategoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditCategoryForm.Designer.cs">
+      <DependentUpon>AddEditCategoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditRoleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditRoleForm.Designer.cs">
+      <DependentUpon>AddEditRoleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditDepartmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditDepartmentForm.Designer.cs">
+      <DependentUpon>AddEditDepartmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditEmployeeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditEmployeeForm.Designer.cs">
+      <DependentUpon>AddEditEmployeeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditTypeForm.Designer.cs">
+      <DependentUpon>AddEditTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditUserForm.Designer.cs">
+      <DependentUpon>AddEditUserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddEditEquipmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddEditEquipmentForm.Designer.cs">
+      <DependentUpon>AddEditEquipmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EmployeesForm.cs">
       <SubType>Form</SubType>
@@ -102,8 +150,32 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\EquipmentService.cs" />
     <Compile Include="Services\OperationService.cs" />
-    <EmbeddedResource Include="Forms\AddEditEquipment.resx">
-      <DependentUpon>AddEditEquipment.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AddEditOperationForm.resx">
+      <DependentUpon>AddEditOperationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditStatusForm.resx">
+      <DependentUpon>AddEditStatusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditCategoryForm.resx">
+      <DependentUpon>AddEditCategoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditRoleForm.resx">
+      <DependentUpon>AddEditRoleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditDepartmentForm.resx">
+      <DependentUpon>AddEditDepartmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditEmployeeForm.resx">
+      <DependentUpon>AddEditEmployeeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditTypeForm.resx">
+      <DependentUpon>AddEditTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditUserForm.resx">
+      <DependentUpon>AddEditUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddEditEquipmentForm.resx">
+      <DependentUpon>AddEditEquipmentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmployeesForm.resx">
       <DependentUpon>EmployeesForm.cs</DependentUpon>

@@ -14,7 +14,7 @@ namespace EquipmentAccounting.Services
         {
             string query = @"
                 SELECT 
-                    u.UID AS UserID,
+                    u.UserID AS UserID,
                     u.Login,
                     u.RoleID,
                     r.Name AS RoleName,
@@ -43,32 +43,54 @@ namespace EquipmentAccounting.Services
         }
 
         // Обновляем существующего пользователя
-        public void UpdateUser(User user, string plainPassword = null)
+        public void UpdateUser(User user, string password)
         {
-            string query = @"
-                UPDATE Users
-                SET Login = @Login,
-                    PasswordHash = COALESCE(@PasswordHash, PasswordHash),
-                    RoleID = @RoleID,
-                    EmployeeID = @EmployeeID
-                WHERE UID = @UserID";
+            string query;
 
-            object passwordValue = string.IsNullOrWhiteSpace(plainPassword)
-                ? DBNull.Value
-                : (object)HashHelper.ComputeHash(plainPassword);
+            // если пароль НЕ введён — не меняем его
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                query = @"
+            UPDATE Users
+            SET Login = @Login,
+                RoleID = @RoleID,
+                EmployeeID = @EmployeeID
+            WHERE UserID = @UserID";
 
-            DbHelper.ExecuteNonQuery(query,
-                new SqlParameter("@UserID", user.UserID),
-                new SqlParameter("@Login", user.Login),
-                new SqlParameter("@PasswordHash", passwordValue),
-                new SqlParameter("@RoleID", user.RoleID),
-                new SqlParameter("@EmployeeID", (object)user.EmployeeID ?? DBNull.Value));
+                DbHelper.ExecuteNonQuery(query,
+                    new SqlParameter("@UserID", user.UserID),
+                    new SqlParameter("@Login", user.Login),
+                    new SqlParameter("@RoleID", user.RoleID),
+                    new SqlParameter("@EmployeeID", (object)user.EmployeeID ?? DBNull.Value)
+                );
+            }
+            else
+            {
+                // если введён новый пароль — обновляем
+                string hash = HashHelper.ComputeHash(password);
+
+                query = @"
+            UPDATE Users
+            SET Login = @Login,
+                PasswordHash = @PasswordHash,
+                RoleID = @RoleID,
+                EmployeeID = @EmployeeID
+            WHERE UserID = @UserID";
+
+                DbHelper.ExecuteNonQuery(query,
+                    new SqlParameter("@UserID", user.UserID),
+                    new SqlParameter("@Login", user.Login),
+                    new SqlParameter("@PasswordHash", hash),
+                    new SqlParameter("@RoleID", user.RoleID),
+                    new SqlParameter("@EmployeeID", (object)user.EmployeeID ?? DBNull.Value)
+                );
+            }
         }
 
         // Удаляем пользователя по ID
         public void DeleteUser(int userId)
         {
-            string query = "DELETE FROM Users WHERE UID = @UserID";
+            string query = "DELETE FROM Users WHERE UserID = @UserID";
 
             DbHelper.ExecuteNonQuery(query,
                 new SqlParameter("@UserID", userId));

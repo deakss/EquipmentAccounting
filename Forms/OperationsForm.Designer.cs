@@ -316,14 +316,16 @@
             // 
             // OperationsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControlEquipment);
             this.Controls.Add(this.toolStripNavBar);
+            this.Font = new System.Drawing.Font("Roboto", 9.25F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "OperationsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Операции";
+            this.Load += new System.EventHandler(this.OperationsForm_Load);
             this.toolStripNavBar.ResumeLayout(false);
             this.toolStripNavBar.PerformLayout();
             this.tabControlEquipment.ResumeLayout(false);

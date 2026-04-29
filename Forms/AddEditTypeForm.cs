@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace EquipmentAccounting.Forms
 {
-    public partial class AddEditEquipment : Form
+    public partial class AddEditTypeForm : Form
     {
-        public AddEditEquipment()
+        public AddEditTypeForm()
         {
             InitializeComponent();
         }
