@@ -1,16 +1,19 @@
-﻿using System;
-using System.Data;
-using System.Windows.Forms;
+﻿using EquipmentAccounting.Helpers;
 using EquipmentAccounting.Models;
 using EquipmentAccounting.Services;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Windows.Forms;
 
 namespace EquipmentAccounting.Forms
 {
     public partial class EquipmentForm : Form
     {
         private readonly User _currentUser;
-        private EquipmentService _service = new EquipmentService();
-        private EmployeeService _empService = new EmployeeService();
+
+        private EquipmentService _equipmentService = new EquipmentService();
+        private EmployeeService _employeeService = new EmployeeService();
 
         public EquipmentForm(User user)
         {
@@ -82,22 +85,252 @@ namespace EquipmentAccounting.Forms
 
         private void LoadEquipment()
         {
-            dataGridViewEquipment.DataSource = _service.GetEquipment();
+            dataGridViewEquipment.DataSource = _equipmentService.GetEquipment();
+            ConfigureEquipmentGrid();
         }
 
+        private void ConfigureEquipmentGrid()
+        {
+            GridHelper.ConfigureBase(dataGridViewEquipment);
+
+            GridHelper.ApplyHeaders(
+                dataGridViewEquipment,
+                new Dictionary<string, string>
+                {
+                    { "Name", "Наименование" },
+                    { "InventoryNumber", "Инв. номер" },
+                    { "SerialNumber", "Серийный номер" },
+                    { "CategoryName", "Категория" },
+                    { "StatusName", "Статус" },
+                    { "DepartmentName", "Отдел" },
+                    { "EmployeeName", "Сотрудник" },
+                    { "PurchaseDate", "Дата покупки" },
+                    { "Cost", "Стоимость" },
+                    { "Description", "Описание" }
+                },
+                "EquipmentID", "CategoryID", "StatusID", "DepartmentID", "EmployeeID"
+            );
+
+            GridHelper.AddActionButtons(dataGridViewEquipment, "editEquip", "deleteEquip");
+
+            dataGridViewEquipment.CellContentClick -= Equipment_CellClick;
+            dataGridViewEquipment.CellContentClick += Equipment_CellClick;
+        }
+        private void Equipment_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dataGridViewEquipment.Rows[e.RowIndex];
+            int id = (int)row.Cells["EquipmentID"].Value;
+
+            if (dataGridViewEquipment.Columns[e.ColumnIndex].Name == "editEquip")
+            {
+                var eq = new Equipment
+                {
+                    EquipmentID = id,
+                    Name = row.Cells["Name"].Value.ToString(),
+                    InventoryNumber = row.Cells["InventoryNumber"].Value.ToString(),
+                    SerialNumber = row.Cells["SerialNumber"]?.Value?.ToString(),
+                    CategoryID = (int)row.Cells["CategoryID"].Value,
+                    StatusID = (int)row.Cells["StatusID"].Value,
+                    DepartmentID = (int)row.Cells["DepartmentID"].Value,
+                    EmployeeID = row.Cells["EmployeeID"].Value == DBNull.Value ? null : (int?)row.Cells["EmployeeID"].Value,
+                    Cost = row.Cells["Cost"].Value == DBNull.Value ? null : (decimal?)row.Cells["Cost"].Value,
+                    Description = row.Cells["Description"]?.Value?.ToString()
+                };
+
+                var form = new AddEditEquipmentForm(eq);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _equipmentService.UpdateEquipment(form.Equipment);
+                    LoadEquipment();
+                }
+            }
+            else if (dataGridViewEquipment.Columns[e.ColumnIndex].Name == "deleteEquip")
+            {
+                if (MessageBox.Show("Удалить оборудование?", "Подтверждение",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    _equipmentService.DeleteEquipment(id);
+                    LoadEquipment();
+                }
+            }
+        }
         private void LoadCategories()
         {
-            dataGridViewCategories.DataSource = _service.GetCategories();
+            dataGridViewCategories.DataSource = _equipmentService.GetCategories();
+            ConfigureCategoriesGrid();
+        }
+
+        private void ConfigureCategoriesGrid()
+        {
+            GridHelper.ConfigureBase(dataGridViewCategories);
+
+            GridHelper.ApplyHeaders(
+                dataGridViewCategories,
+                new Dictionary<string, string>
+                {
+                    { "Name", "Название" }
+                },
+                "CategoryID"
+            );
+
+            GridHelper.AddActionButtons(dataGridViewCategories, "editCat", "deleteCat");
+
+            dataGridViewCategories.CellContentClick -= Categories_CellClick;
+            dataGridViewCategories.CellContentClick += Categories_CellClick;
+        }
+        private void Categories_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dataGridViewCategories.Rows[e.RowIndex];
+            int id = (int)row.Cells["CategoryID"].Value;
+
+            if (dataGridViewCategories.Columns[e.ColumnIndex].Name == "editCat")
+            {
+                var cat = new Category
+                {
+                    CategoryID = id,
+                    Name = row.Cells["Name"].Value.ToString()
+                };
+
+                var form = new AddEditCategoryForm(cat);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _equipmentService.UpdateCategory(form.Category);
+                    LoadCategories();
+                }
+            }
+            else if (dataGridViewCategories.Columns[e.ColumnIndex].Name == "deleteCat")
+            {
+                if (MessageBox.Show("Удалить категорию?", "Подтверждение",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    _equipmentService.DeleteCategory(id);
+                    LoadCategories();
+                }
+            }
         }
 
         private void LoadDepartments()
         {
-            dataGridViewDepartments.DataSource = _empService.GetDepartments();
+            dataGridViewDepartments.DataSource = _employeeService.GetDepartments();
+            ConfigureDepartmentsGrid();
+        }
+
+        private void ConfigureDepartmentsGrid()
+        {
+            GridHelper.ConfigureBase(dataGridViewDepartments);
+
+            GridHelper.ApplyHeaders(
+                dataGridViewDepartments,
+                new Dictionary<string, string>
+                {
+                    { "Name", "Название" }
+                },
+                "DepartmentID"
+            );
+
+            GridHelper.AddActionButtons(dataGridViewDepartments, "editDep", "deleteDep");
+
+            dataGridViewDepartments.CellContentClick -= Departments_CellClick;
+            dataGridViewDepartments.CellContentClick += Departments_CellClick;
+        }
+
+        private void Departments_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dataGridViewDepartments.Rows[e.RowIndex];
+            int id = (int)row.Cells["DepartmentID"].Value;
+
+            if (dataGridViewDepartments.Columns[e.ColumnIndex].Name == "editDep")
+            {
+                var dep = new Department
+                {
+                    DepartmentID = id,
+                    Name = row.Cells["Name"].Value.ToString()
+                };
+
+                var form = new AddEditDepartmentForm(dep);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _employeeService.UpdateDepartment(form.Department);
+                    LoadDepartments();
+                }
+            }
+            else if (dataGridViewDepartments.Columns[e.ColumnIndex].Name == "deleteDep")
+            {
+                if (MessageBox.Show("Удалить отдел?", "Подтверждение",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    _employeeService.DeleteDepartment(id);
+                    LoadDepartments();
+                }
+            }
         }
 
         private void LoadStatuses()
         {
-            dataGridViewStatuses.DataSource = _service.GetStatuses();
+            dataGridViewStatuses.DataSource = _equipmentService.GetStatuses();
+            ConfigureStatusesGrid();
+        }
+
+        private void ConfigureStatusesGrid()
+        {
+            GridHelper.ConfigureBase(dataGridViewStatuses);
+
+            GridHelper.ApplyHeaders(
+                dataGridViewStatuses,
+                new Dictionary<string, string>
+                {
+                    { "Name", "Название статуса" }
+                },
+                "StatusID"
+            );
+
+            GridHelper.AddActionButtons(dataGridViewStatuses, "editStatus", "deleteStatus");
+
+            dataGridViewStatuses.CellContentClick -= Statuses_CellClick;
+            dataGridViewStatuses.CellContentClick += Statuses_CellClick;
+        }
+
+        private void Statuses_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dataGridViewStatuses.Rows[e.RowIndex];
+            int id = (int)row.Cells["StatusID"].Value;
+
+            if (dataGridViewStatuses.Columns[e.ColumnIndex].Name == "editStatus")
+            {
+                var st = new Status
+                {
+                    StatusID = id,
+                    Name = row.Cells["Name"].Value.ToString()
+                };
+
+                var form = new AddEditStatusForm(st);
+
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    _equipmentService.UpdateStatus(form.Status);
+                    LoadStatuses();
+                }
+            }
+            else if (dataGridViewStatuses.Columns[e.ColumnIndex].Name == "deleteStatus")
+            {
+                if (MessageBox.Show("Удалить статус?", "Подтверждение",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    _equipmentService.DeleteStatus(id);
+                    LoadStatuses();
+                }
+            }
         }
 
         // Получение выбранной строки в DataGridView -> возвращаем DataRowView для удобного доступа к данным
@@ -116,7 +349,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _service.AddEquipment(form.Equipment);
+                    _equipmentService.AddEquipment(form.Equipment);
                     LoadAll();
                 }
             });
@@ -147,7 +380,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _service.UpdateEquipment(form.Equipment);
+                    _equipmentService.UpdateEquipment(form.Equipment);
                     LoadAll();
                 }
             });
@@ -164,7 +397,7 @@ namespace EquipmentAccounting.Forms
 
                 if (MessageBox.Show("Удалить?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    _service.DeleteEquipment(id);
+                    _equipmentService.DeleteEquipment(id);
                     LoadAll();
                 }
             });
@@ -180,7 +413,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _service.AddCategory(form.Category);
+                    _equipmentService.AddCategory(form.Category);
                     LoadAll();
                 }
             });
@@ -203,7 +436,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _service.UpdateCategory(form.Category);
+                    _equipmentService.UpdateCategory(form.Category);
                     LoadAll();
                 }
             });
@@ -220,7 +453,7 @@ namespace EquipmentAccounting.Forms
 
                 if (MessageBox.Show("Удалить?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    _service.DeleteCategory(id);
+                    _equipmentService.DeleteCategory(id);
                     LoadAll();
                 }
             });
@@ -236,7 +469,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _service.AddStatus(form.Status);
+                    _equipmentService.AddStatus(form.Status);
                     LoadAll();
                 }
             });
@@ -259,7 +492,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _service.UpdateStatus(form.Status);
+                    _equipmentService.UpdateStatus(form.Status);
                     LoadAll();
                 }
             });
@@ -276,7 +509,7 @@ namespace EquipmentAccounting.Forms
 
                 if (MessageBox.Show("Удалить?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    _service.DeleteStatus(id);
+                    _equipmentService.DeleteStatus(id);
                     LoadAll();
                 }
             });
@@ -292,7 +525,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _empService.AddDepartment(form.Department);
+                    _employeeService.AddDepartment(form.Department);
                     LoadDepartments();
                 }
             });
@@ -315,7 +548,7 @@ namespace EquipmentAccounting.Forms
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _empService.UpdateDepartment(form.Department);
+                    _employeeService.UpdateDepartment(form.Department);
                     LoadDepartments();
                 }
             });
@@ -336,7 +569,7 @@ namespace EquipmentAccounting.Forms
                     return;
 
                 int departmentId = Convert.ToInt32(row["DepartmentID"]);
-                _empService.DeleteDepartment(departmentId);
+                _employeeService.DeleteDepartment(departmentId);
                 LoadDepartments();
             });
         }
