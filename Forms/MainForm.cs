@@ -81,5 +81,13 @@ namespace EquipmentAccounting
             employeesForm.ShowDialog();
             this.Close();
         }
+
+        private void toolStripButtonExit_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var loginForm = new LoginForm();
+            loginForm.ShowDialog();
+            this.Close();
+        }
     }
 }

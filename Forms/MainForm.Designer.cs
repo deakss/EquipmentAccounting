@@ -52,6 +52,8 @@
             this.toolStripButtonMoveEquip = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonFixEquip = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripNavBar.SuspendLayout();
             this.GroupBoxAdmin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DataGridLastOps)).BeginInit();
@@ -69,6 +71,8 @@
             this.toolStripButtonEquipment,
             this.toolStripSeparator2,
             this.toolStripButtonUsers,
+            this.toolStripButtonExit,
+            this.toolStripSeparator12,
             this.toolStripLabelUser});
             this.toolStripNavBar.Location = new System.Drawing.Point(0, 0);
             this.toolStripNavBar.Name = "toolStripNavBar";
@@ -167,7 +171,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(13, 21);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(10);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(775, 35);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
@@ -266,6 +270,23 @@
             this.toolStripButtonFixEquip.Size = new System.Drawing.Size(68, 22);
             this.toolStripButtonFixEquip.Text = "Ремонт";
             // 
+            // toolStripButtonExit
+            // 
+            this.toolStripButtonExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonExit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExit.Image")));
+            this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonExit.Name = "toolStripButtonExit";
+            this.toolStripButtonExit.Size = new System.Drawing.Size(46, 22);
+            this.toolStripButtonExit.Text = "Выйти";
+            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -316,5 +337,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonFixEquip;
         private System.Windows.Forms.ToolStripButton toolStripButtonMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonExit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
     }
 }

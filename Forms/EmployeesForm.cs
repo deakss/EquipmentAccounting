@@ -104,6 +104,14 @@ namespace EquipmentAccounting.Forms
             this.Close();
         }
 
+        private void toolStripButtonExit_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var loginForm = new LoginForm();
+            loginForm.ShowDialog();
+            this.Close();
+        }
+
         // Метод для содержания кода try в одном месте
         private void ExecuteWithTry(Action action)
         {

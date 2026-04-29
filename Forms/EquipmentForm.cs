@@ -51,6 +51,14 @@ namespace EquipmentAccounting.Forms
             LoadAll();
         }
 
+        private void toolStripButtonExit_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var loginForm = new LoginForm();
+            loginForm.ShowDialog();
+            this.Close();
+        }
+
         private void ExecuteWithTry(Action action)
         {
             try

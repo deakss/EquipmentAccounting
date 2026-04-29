@@ -10,8 +10,13 @@ namespace EquipmentAccounting.Forms
     public partial class OperationsForm : Form
     {
         private readonly OperationService _service = new OperationService();
-        private readonly User _currentUser = new User();
+        private readonly User _currentUser;
 
+        public enum Roles
+        {
+            Admin = 1,
+            User = 2
+        }
         public OperationsForm(User user)
         {
             InitializeComponent();
@@ -19,6 +24,15 @@ namespace EquipmentAccounting.Forms
             toolStripLabelUser.Text =$"Пользователь: {_currentUser.Login}";
             Load += OperationsForm_Load;
             toolStripButtonOperations.Enabled = false;
+
+            if (_currentUser.RoleID != (int)Roles.Admin)
+            {
+                toolStripButtonEquipment.Visible = false;
+                toolStripButtonUsers.Visible = false;
+                tabPageOperationTypes.Visible = false;
+                toolStripSeparator1.Visible = false;
+                toolStripSeparator2.Visible = false;
+            }
         }
 
         private void OperationsForm_Load(object sender, EventArgs e)
@@ -92,6 +106,14 @@ namespace EquipmentAccounting.Forms
             this.Hide();
             var equipmentForm = new EquipmentForm(_currentUser);
             equipmentForm.ShowDialog();
+            this.Close();
+        }
+
+        private void toolStripButtonExit_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var loginForm = new LoginForm();
+            loginForm.ShowDialog();
             this.Close();
         }
 
