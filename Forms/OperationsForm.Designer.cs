@@ -37,28 +37,18 @@
             this.toolStripButtonEquipment = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonUsers = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelUser = new System.Windows.Forms.ToolStripLabel();
             this.tabControlEquipment = new System.Windows.Forms.TabControl();
             this.tabPageOperations = new System.Windows.Forms.TabPage();
             this.toolStripOperationsActions = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonAddOperations = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonEditOperations = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonDelOperations = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewOperations = new System.Windows.Forms.DataGridView();
             this.tabPageOperationTypes = new System.Windows.Forms.TabPage();
             this.toolStripOperationTypesActions = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonAddOperationType = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonEditOperationType = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonDelOperationType = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewOperationTypes = new System.Windows.Forms.DataGridView();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
             this.toolStripNavBar.SuspendLayout();
             this.tabControlEquipment.SuspendLayout();
             this.tabPageOperations.SuspendLayout();
@@ -139,6 +129,23 @@
             this.toolStripButtonUsers.Text = "Пользователи";
             this.toolStripButtonUsers.Click += new System.EventHandler(this.toolStripButtonUsers_Click);
             // 
+            // toolStripButtonExit
+            // 
+            this.toolStripButtonExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonExit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExit.Image")));
+            this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonExit.Name = "toolStripButtonExit";
+            this.toolStripButtonExit.Size = new System.Drawing.Size(46, 22);
+            this.toolStripButtonExit.Text = "Выйти";
+            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripLabelUser
             // 
             this.toolStripLabelUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -175,23 +182,12 @@
             this.toolStripOperationsActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripOperationsActions.Font = new System.Drawing.Font("Roboto", 9.25F);
             this.toolStripOperationsActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel2,
-            this.toolStripButtonAddOperations,
-            this.toolStripSeparator4,
-            this.toolStripButtonEditOperations,
-            this.toolStripSeparator5,
-            this.toolStripButtonDelOperations});
+            this.toolStripButtonAddOperations});
             this.toolStripOperationsActions.Location = new System.Drawing.Point(3, 369);
             this.toolStripOperationsActions.Name = "toolStripOperationsActions";
             this.toolStripOperationsActions.Size = new System.Drawing.Size(786, 25);
             this.toolStripOperationsActions.TabIndex = 8;
             this.toolStripOperationsActions.Text = "toolStrip2";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(70, 22);
-            this.toolStripLabel2.Text = "Действия:";
             // 
             // toolStripButtonAddOperations
             // 
@@ -202,36 +198,6 @@
             this.toolStripButtonAddOperations.Size = new System.Drawing.Size(86, 22);
             this.toolStripButtonAddOperations.Text = "Добавить";
             this.toolStripButtonAddOperations.Click += new System.EventHandler(this.toolStripButtonAddOperation_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonEditOperations
-            // 
-            this.toolStripButtonEditOperations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(217)))), ((int)(((byte)(255)))));
-            this.toolStripButtonEditOperations.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditOperations.Image")));
-            this.toolStripButtonEditOperations.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEditOperations.Name = "toolStripButtonEditOperations";
-            this.toolStripButtonEditOperations.Size = new System.Drawing.Size(119, 22);
-            this.toolStripButtonEditOperations.Text = "Редактировать";
-            this.toolStripButtonEditOperations.Click += new System.EventHandler(this.toolStripButtonEditOperation_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonDelOperations
-            // 
-            this.toolStripButtonDelOperations.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(173)))), ((int)(((byte)(168)))));
-            this.toolStripButtonDelOperations.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelOperations.Image")));
-            this.toolStripButtonDelOperations.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelOperations.Name = "toolStripButtonDelOperations";
-            this.toolStripButtonDelOperations.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButtonDelOperations.Text = "Удалить";
-            this.toolStripButtonDelOperations.Click += new System.EventHandler(this.toolStripButtonDelOperation_Click);
             // 
             // dataGridViewOperations
             // 
@@ -258,23 +224,12 @@
             this.toolStripOperationTypesActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripOperationTypesActions.Font = new System.Drawing.Font("Roboto", 9.25F);
             this.toolStripOperationTypesActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripButtonAddOperationType,
-            this.toolStripSeparator6,
-            this.toolStripButtonEditOperationType,
-            this.toolStripSeparator7,
-            this.toolStripButtonDelOperationType});
+            this.toolStripButtonAddOperationType});
             this.toolStripOperationTypesActions.Location = new System.Drawing.Point(3, 369);
             this.toolStripOperationTypesActions.Name = "toolStripOperationTypesActions";
             this.toolStripOperationTypesActions.Size = new System.Drawing.Size(786, 25);
             this.toolStripOperationTypesActions.TabIndex = 9;
             this.toolStripOperationTypesActions.Text = "toolStrip2";
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(70, 22);
-            this.toolStripLabel1.Text = "Действия:";
             // 
             // toolStripButtonAddOperationType
             // 
@@ -286,36 +241,6 @@
             this.toolStripButtonAddOperationType.Text = "Добавить";
             this.toolStripButtonAddOperationType.Click += new System.EventHandler(this.toolStripButtonAddOperationType_Click);
             // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonEditOperationType
-            // 
-            this.toolStripButtonEditOperationType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(217)))), ((int)(((byte)(255)))));
-            this.toolStripButtonEditOperationType.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditOperationType.Image")));
-            this.toolStripButtonEditOperationType.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEditOperationType.Name = "toolStripButtonEditOperationType";
-            this.toolStripButtonEditOperationType.Size = new System.Drawing.Size(119, 22);
-            this.toolStripButtonEditOperationType.Text = "Редактировать";
-            this.toolStripButtonEditOperationType.Click += new System.EventHandler(this.toolStripButtonEditOperationType_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonDelOperationType
-            // 
-            this.toolStripButtonDelOperationType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(173)))), ((int)(((byte)(168)))));
-            this.toolStripButtonDelOperationType.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelOperationType.Image")));
-            this.toolStripButtonDelOperationType.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelOperationType.Name = "toolStripButtonDelOperationType";
-            this.toolStripButtonDelOperationType.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButtonDelOperationType.Text = "Удалить";
-            this.toolStripButtonDelOperationType.Click += new System.EventHandler(this.toolStripButtonDelOperationType_Click);
-            // 
             // dataGridViewOperationTypes
             // 
             this.dataGridViewOperationTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -323,23 +248,6 @@
             this.dataGridViewOperationTypes.Name = "dataGridViewOperationTypes";
             this.dataGridViewOperationTypes.Size = new System.Drawing.Size(792, 366);
             this.dataGridViewOperationTypes.TabIndex = 1;
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonExit
-            // 
-            this.toolStripButtonExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonExit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExit.Image")));
-            this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonExit.Name = "toolStripButtonExit";
-            this.toolStripButtonExit.Size = new System.Drawing.Size(46, 22);
-            this.toolStripButtonExit.Text = "Выйти";
-            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
             // 
             // OperationsForm
             // 
@@ -385,21 +293,11 @@
         private System.Windows.Forms.TabControl tabControlEquipment;
         private System.Windows.Forms.TabPage tabPageOperations;
         private System.Windows.Forms.ToolStrip toolStripOperationsActions;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAddOperations;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton toolStripButtonEditOperations;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelOperations;
         private System.Windows.Forms.DataGridView dataGridViewOperations;
         private System.Windows.Forms.TabPage tabPageOperationTypes;
         private System.Windows.Forms.ToolStrip toolStripOperationTypesActions;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAddOperationType;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripButton toolStripButtonEditOperationType;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelOperationType;
         private System.Windows.Forms.DataGridView dataGridViewOperationTypes;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripButton toolStripButtonExit;

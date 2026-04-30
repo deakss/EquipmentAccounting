@@ -16,6 +16,8 @@ namespace EquipmentAccounting.Helpers
             grid.RowHeadersVisible = false;
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.EditMode = DataGridViewEditMode.EditProgrammatically;
+            grid.AllowUserToAddRows = false;
+            grid.AllowUserToDeleteRows = false;
         }
 
         public static void ApplyHeaders(

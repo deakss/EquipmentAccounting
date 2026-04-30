@@ -1,6 +1,8 @@
-﻿using EquipmentAccounting.Models;
+﻿using EquipmentAccounting.Helpers;
+using EquipmentAccounting.Models;
 using EquipmentAccounting.Services;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -21,62 +23,48 @@ namespace EquipmentAccounting.Forms
         {
             InitializeComponent();
             _currentUser = user;
-            toolStripLabelUser.Text =$"Пользователь: {_currentUser.Login}";
+            toolStripLabelUser.Text = $"Пользователь: {_currentUser.Login}";
             Load += OperationsForm_Load;
             toolStripButtonOperations.Enabled = false;
 
             if (_currentUser.RoleID != (int)Roles.Admin)
             {
+                toolStripButtonMenu.Visible = false;
                 toolStripButtonEquipment.Visible = false;
                 toolStripButtonUsers.Visible = false;
-                tabPageOperationTypes.Visible = false;
                 toolStripSeparator1.Visible = false;
                 toolStripSeparator2.Visible = false;
+                toolStripSeparator3.Visible = false;
             }
         }
 
         private void OperationsForm_Load(object sender, EventArgs e)
         {
-            SetupGrid(dataGridViewOperations);
-            SetupGrid(dataGridViewOperationTypes);
             LoadOperations();
             LoadOperationTypes();
         }
 
-        private void SetupGrid(DataGridView grid)
-        {
-            grid.AutoGenerateColumns = true;
-            grid.ReadOnly = true;
-            grid.AllowUserToAddRows = false;
-            grid.AllowUserToDeleteRows = false;
-            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            grid.MultiSelect = false;
-            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        }
-
-        private void LoadOperations()
-        {
-            dataGridViewOperations.DataSource = _service.GetOperations();
-        }
-
-        private void LoadOperationTypes()
-        {
-            dataGridViewOperationTypes.DataSource = _service.GetOperationTypes();
-        }
         private DataRowView GetSelectedRow(DataGridView grid)
         {
             return grid.CurrentRow?.DataBoundItem as DataRowView;
         }
 
+        // Метод для содержания кода try в одном месте
         private void ExecuteWithTry(Action action)
         {
             try
             {
                 action();
             }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Удаление невозможно",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (SqlException ex) when (ex.Number == 547)
             {
-                MessageBox.Show("Нельзя удалить тип операции, так как он используется.");
+                MessageBox.Show("Нельзя удалить запись: она связана с другими данными.",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
@@ -117,6 +105,14 @@ namespace EquipmentAccounting.Forms
             this.Close();
         }
 
+        // ===================== OPERATION =====================
+
+        private void LoadOperations()
+        {
+            dataGridViewOperations.DataSource = _service.GetOperations();
+            ConfigureOperationsGrid();
+        }
+
         private void toolStripButtonAddOperation_Click(object sender, EventArgs e)
         {
             ExecuteWithTry(() =>
@@ -126,63 +122,41 @@ namespace EquipmentAccounting.Forms
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     _service.AddOperation(form.Operation);
-                    LoadOperations();
+                    ConfigureOperationsGrid();
                 }
             });
         }
 
-        private void toolStripButtonEditOperation_Click(object sender, EventArgs e)
+        private void ConfigureOperationsGrid()
         {
             ExecuteWithTry(() =>
             {
-                var row = GetSelectedRow(dataGridViewOperations);
-                if (row == null)
-                {
-                    MessageBox.Show("Выберите операцию.");
-                    return;
-                }
+                GridHelper.ConfigureBase(dataGridViewOperations);
 
-                var operation = new Operation
-                {
-                    OperationID = (int)row["OperationID"],
-                    EquipmentID = (int)row["EquipmentID"],
-                    OperationTypeID = (int)row["OperationTypeID"],
-                    EmployeeID = row["EmployeeID"] == DBNull.Value ? null : (int?)row["EmployeeID"],
-                    FromDepartmentID = row["FromDepartmentID"] == DBNull.Value ? null : (int?)row["FromDepartmentID"],
-                    ToDepartmentID = row["ToDepartmentID"] == DBNull.Value ? null : (int?)row["ToDepartmentID"],
-                    OperationDate = (DateTime)row["OperationDate"],
-                    Comment = row["Comment"] == DBNull.Value ? null : row["Comment"].ToString()
-                };
-
-                var form = new AddEditOperationForm(operation);
-
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    _service.UpdateOperation(form.Operation);
-                    LoadOperations();
-                }
+                GridHelper.ApplyHeaders(
+                    dataGridViewOperations,
+                    new Dictionary<string, string>
+                    {
+                    { "OperationDate", "Дата" },
+                    { "EquipmentName", "Оборудование" },
+                    { "OperationTypeName", "Тип операции" },
+                    { "EmployeeName", "Сотрудник" },
+                    { "FromDepartmentName", "Откуда" },
+                    { "ToDepartmentName", "Куда" },
+                    { "Comment", "Комментарий" }
+                    },
+                    "OperationID", "EquipmentID", "OperationTypeID",
+                    "EmployeeID", "FromDepartmentID", "ToDepartmentID"
+                );
             });
         }
 
-        private void toolStripButtonDelOperation_Click(object sender, EventArgs e)
+        // ===================== OPERATION TYPE =====================
+
+        private void LoadOperationTypes()
         {
-            ExecuteWithTry(() =>
-            {
-                var row = GetSelectedRow(dataGridViewOperations);
-                if (row == null)
-                {
-                    MessageBox.Show("Выберите операцию.");
-                    return;
-                }
-
-                if (MessageBox.Show("Удалить операцию?", "Подтверждение",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                    return;
-
-                int operationId = (int)row["OperationID"];
-                _service.DeleteOperation(operationId);
-                LoadOperations();
-            });
+            dataGridViewOperationTypes.DataSource = _service.GetOperationTypes();
+            ConfigureOperationTypesGrid();
         }
 
         private void toolStripButtonAddOperationType_Click(object sender, EventArgs e)
@@ -199,56 +173,62 @@ namespace EquipmentAccounting.Forms
             });
         }
 
-        private void toolStripButtonEditOperationType_Click(object sender, EventArgs e)
+        private void ConfigureOperationTypesGrid()
         {
             ExecuteWithTry(() =>
             {
-                var row = GetSelectedRow(dataGridViewOperationTypes);
-                if (row == null)
-                {
-                    MessageBox.Show("Выберите тип операции");
-                    return;
-                }
+                GridHelper.ConfigureBase(dataGridViewOperationTypes);
 
-                var operationType = new OperationType
-                {
-                    OperationTypeID = (int)row["OperationTypeID"],
-                    Name = row["Name"].ToString()
-                };
+                GridHelper.ApplyHeaders(
+                    dataGridViewOperationTypes,
+                    new Dictionary<string, string>
+                    {
+                    { "Name", "Название типа операции" }
+                    },
+                    "OperationTypeID"
+                );
 
-                var form = new AddEditTypeForm(operationType);
+                GridHelper.AddActionButtons(dataGridViewOperationTypes, "editType", "deleteType");
 
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    _service.UpdateOperationType(form.OperationType);
-
-                    LoadOperationTypes();
-                }
+                dataGridViewOperationTypes.CellContentClick -= OperationTypes_CellClick;
+                dataGridViewOperationTypes.CellContentClick += OperationTypes_CellClick;
             });
         }
 
-        private void toolStripButtonDelOperationType_Click(object sender, EventArgs e)
+        private void OperationTypes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             ExecuteWithTry(() =>
             {
-                var row = GetSelectedRow(dataGridViewOperationTypes);
-                if (row == null)
+                if (e.RowIndex < 0) return;
+
+                var row = dataGridViewOperationTypes.Rows[e.RowIndex];
+                int id = (int)row.Cells["OperationTypeID"].Value;
+
+                if (dataGridViewOperationTypes.Columns[e.ColumnIndex].Name == "editType")
                 {
-                    MessageBox.Show("Выберите тип операции");
-                    return;
+                    var type = new OperationType
+                    {
+                        OperationTypeID = id,
+                        Name = row.Cells["Name"].Value.ToString()
+                    };
+
+                    var form = new AddEditTypeForm(type);
+
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        _service.UpdateOperationType(form.OperationType);
+                        LoadOperationTypes();
+                    }
                 }
-
-                int id = (int)row["OperationTypeID"];
-
-                if (MessageBox.Show("Удалить тип операции?", "Подтверждение",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                else if (dataGridViewOperationTypes.Columns[e.ColumnIndex].Name == "deleteType")
                 {
-                    _service.DeleteOperationType(id);
+                    if (MessageBox.Show("Удалить тип операции?", "Подтверждение",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                        return;
+                    _service.DeleteOperationTypeSafe(id);
                     LoadOperationTypes();
                 }
-
             });
-                
         }
     }
 }

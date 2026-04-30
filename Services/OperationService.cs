@@ -8,6 +8,31 @@ namespace EquipmentAccounting.Services
 {
     public class OperationService
     {
+        public bool CanDeleteOperationType(int id, out string reason)
+        {
+            string query = "SELECT COUNT(*) FROM Operations WHERE OperationTypeID = @id";
+
+            object result = DbHelper.ExecuteScalar(query,
+                new SqlParameter("@id", id));
+
+            if (Convert.ToInt32(result) > 0)
+            {
+                reason = "Нельзя удалить: тип используется в операциях.";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public void DeleteOperationTypeSafe(int id)
+        {
+            if (!CanDeleteOperationType(id, out string reason))
+                throw new InvalidOperationException(reason);
+
+            DeleteOperationType(id);
+        }
+
         public DataTable GetOperations()
         {
             string query = @"
@@ -141,53 +166,6 @@ namespace EquipmentAccounting.Services
             ApplyOperationToEquipment(operation);
         }
 
-        public void UpdateOperation(Operation operation)
-        {
-            string updateQuery = @"
-                UPDATE Operations
-                SET 
-                    EquipmentID = @EquipmentID,
-                    OperationTypeID = @OperationTypeID,
-                    EmployeeID = @EmployeeID,
-                    FromDepartmentID = @FromDepartmentID,
-                    ToDepartmentID = @ToDepartmentID,
-                    OperationDate = @OperationDate,
-                    Comment = @Comment
-                WHERE OperationID = @OperationID";
-
-            DbHelper.ExecuteNonQuery(updateQuery,
-                new SqlParameter("@OperationID", operation.OperationID),
-                new SqlParameter("@EquipmentID", operation.EquipmentID),
-                new SqlParameter("@OperationTypeID", operation.OperationTypeID),
-                new SqlParameter("@EmployeeID", (object)operation.EmployeeID ?? DBNull.Value),
-                new SqlParameter("@FromDepartmentID", (object)operation.FromDepartmentID ?? DBNull.Value),
-                new SqlParameter("@ToDepartmentID", (object)operation.ToDepartmentID ?? DBNull.Value),
-                new SqlParameter("@OperationDate", operation.OperationDate),
-                new SqlParameter("@Comment", (object)operation.Comment ?? DBNull.Value));
-
-            ApplyOperationToEquipment(operation);
-        }
-
-        public void DeleteOperation(int operationId)
-        {
-            // Сначала узнаём, к какому оборудованию относилась операция
-            object equipmentIdObj = DbHelper.ExecuteScalar(@"
-                SELECT EquipmentID
-                FROM Operations
-                WHERE OperationID = @OperationID",
-                new SqlParameter("@OperationID", operationId));
-
-            if (equipmentIdObj == null || equipmentIdObj == DBNull.Value)
-                return;
-
-            int equipmentId = Convert.ToInt32(equipmentIdObj);
-
-            DbHelper.ExecuteNonQuery(@"
-                DELETE FROM Operations
-                WHERE OperationID = @OperationID",
-                new SqlParameter("@OperationID", operationId));
-        }
-
         private void ApplyOperationToEquipment(Operation operation)
         {
             DataTable equipmentTable = DbHelper.ExecuteQuery(@"
@@ -319,6 +297,6 @@ namespace EquipmentAccounting.Services
                 new SqlParameter("@name", "Технический отдел"));
 
             return Convert.ToInt32(result);
-        }
+        } 
     }
 }

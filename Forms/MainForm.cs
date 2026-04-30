@@ -29,31 +29,11 @@ namespace EquipmentAccounting
         {
             InitializeComponent();
             _currentUser = user;
-
-            if (_currentUser.RoleID != (int)Roles.Admin)
-            {
-                toolStripButtonEquipment.Visible = false;
-                toolStripButtonUsers.Visible = false;
-                GroupBoxAdmin.Visible = false;
-                toolStripFastActions.Visible = false;
-                toolStripSeparator1.Visible = false;
-                toolStripSeparator2.Visible = false;
-            }
         }
 
         public MainForm()
         {
             InitializeComponent();
-
-            if (_currentUser.RoleID != (int)Roles.Admin)
-            {
-                toolStripButtonEquipment.Visible = false;
-                toolStripButtonUsers.Visible = false;
-                GroupBoxAdmin.Visible = false;
-                toolStripFastActions.Visible = false;
-                toolStripSeparator1.Visible = false;
-                toolStripSeparator2.Visible = false;
-            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)

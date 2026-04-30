@@ -10,6 +10,26 @@ namespace EquipmentAccounting.Services
     {
         // ================= EQUIPMENT =================
 
+        public bool CanDeleteEquipment(int equipmentId, out string reason)
+        {
+            if (ExistsInTable("Operations", "EquipmentID", equipmentId))
+            {
+                reason = "Нельзя удалить оборудование: оно участвует в операциях.";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public void DeleteEquipmentSafe(int equipmentId)
+        {
+            if (!CanDeleteEquipment(equipmentId, out string reason))
+                throw new InvalidOperationException(reason);
+
+            DeleteEquipment(equipmentId);
+        }
+
         public int GetTotalEquipmentCount()
         {
             object result = DbHelper.ExecuteScalar("SELECT COUNT(*) FROM Equipment");
@@ -120,7 +140,27 @@ namespace EquipmentAccounting.Services
         }
 
         // ================= CATEGORIES =================
+        
+        public bool CanDeleteCategory(int categoryId, out string reason)
+        {
+            if (ExistsInTable("Equipment", "CategoryID", categoryId))
+            {
+                reason = "Нельзя удалить категорию: она используется у оборудования.";
+                return false;
+            }
 
+            reason = null;
+            return true;
+        }
+
+        public void DeleteCategorySafe(int categoryId)
+        {
+            if (!CanDeleteCategory(categoryId, out string reason))
+                throw new InvalidOperationException(reason);
+
+            DeleteCategory(categoryId);
+        }
+        
         public DataTable GetCategories()
         {
             return DbHelper.ExecuteQuery("SELECT * FROM Categories ORDER BY Name");
@@ -149,6 +189,26 @@ namespace EquipmentAccounting.Services
         }
 
         // ================= STATUSES =================
+        
+        public bool CanDeleteStatus(int statusId, out string reason)
+        {
+            if (ExistsInTable("Equipment", "StatusID", statusId))
+            {
+                reason = "Нельзя удалить статус: он используется у оборудования.";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public void DeleteStatusSafe(int statusId)
+        {
+            if (!CanDeleteStatus(statusId, out string reason))
+                throw new InvalidOperationException(reason);
+
+            DeleteStatus(statusId);
+        }
 
         public DataTable GetStatuses()
         {
@@ -175,6 +235,18 @@ namespace EquipmentAccounting.Services
             DbHelper.ExecuteNonQuery(
                 "DELETE FROM Statuses WHERE StatusID=@id",
                 new SqlParameter("@id", id));
+        }
+
+        // ===================== HELPER =====================
+
+        private bool ExistsInTable(string table, string column, int id)
+        {
+            string query = $"SELECT COUNT(*) FROM {table} WHERE {column} = @id";
+
+            object result = DbHelper.ExecuteScalar(query,
+                new SqlParameter("@id", id));
+
+            return Convert.ToInt32(result) > 0;
         }
     }
 }

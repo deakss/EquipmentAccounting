@@ -37,46 +37,30 @@
             this.toolStripButtonEquipment = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonUsers = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelUser = new System.Windows.Forms.ToolStripLabel();
             this.tabControlUsers = new System.Windows.Forms.TabControl();
             this.tabPageUsers = new System.Windows.Forms.TabPage();
             this.toolStripUsersActions = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonAddUser = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonEditUser = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonDelUser = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
             this.tabPageEmployees = new System.Windows.Forms.TabPage();
             this.toolStripEmployeesActions = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonAddEmployees = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonEditEmployees = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonDelEmployees = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewEmployees = new System.Windows.Forms.DataGridView();
             this.tabPageDepartments = new System.Windows.Forms.TabPage();
             this.toolStripDepartmentsActions = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonAddDepartments = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonEditDepartments = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonDelDepartments = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewDepartments = new System.Windows.Forms.DataGridView();
             this.tabPageRoles = new System.Windows.Forms.TabPage();
-            this.toolStripRolesActions = new System.Windows.Forms.ToolStrip();
+            this.dataGridViewRoles = new System.Windows.Forms.DataGridView();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonAddRoles = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonEditRoles = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonDelRoles = new System.Windows.Forms.ToolStripButton();
-            this.dataGridViewRoles = new System.Windows.Forms.DataGridView();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonExit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripRolesActions = new System.Windows.Forms.ToolStrip();
             this.toolStripNavBar.SuspendLayout();
             this.tabControlUsers.SuspendLayout();
             this.tabPageUsers.SuspendLayout();
@@ -89,8 +73,8 @@
             this.toolStripDepartmentsActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDepartments)).BeginInit();
             this.tabPageRoles.SuspendLayout();
-            this.toolStripRolesActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).BeginInit();
+            this.toolStripRolesActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripNavBar
@@ -164,6 +148,23 @@
             this.toolStripButtonUsers.Size = new System.Drawing.Size(114, 22);
             this.toolStripButtonUsers.Text = "Пользователи";
             // 
+            // toolStripButtonExit
+            // 
+            this.toolStripButtonExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonExit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExit.Image")));
+            this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonExit.Name = "toolStripButtonExit";
+            this.toolStripButtonExit.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButtonExit.Text = "Выйти";
+            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripLabelUser
             // 
             this.toolStripLabelUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -203,11 +204,7 @@
             this.toolStripUsersActions.Font = new System.Drawing.Font("Roboto", 9.25F);
             this.toolStripUsersActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel2,
-            this.toolStripButtonAddUser,
-            this.toolStripSeparator4,
-            this.toolStripButtonEditUser,
-            this.toolStripSeparator5,
-            this.toolStripButtonDelUser});
+            this.toolStripButtonAddUser});
             this.toolStripUsersActions.Location = new System.Drawing.Point(3, 369);
             this.toolStripUsersActions.Name = "toolStripUsersActions";
             this.toolStripUsersActions.Size = new System.Drawing.Size(786, 25);
@@ -230,38 +227,9 @@
             this.toolStripButtonAddUser.Text = "Добавить";
             this.toolStripButtonAddUser.Click += new System.EventHandler(this.toolStripButtonAddUser_Click);
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonEditUser
-            // 
-            this.toolStripButtonEditUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(217)))), ((int)(((byte)(255)))));
-            this.toolStripButtonEditUser.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditUser.Image")));
-            this.toolStripButtonEditUser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEditUser.Name = "toolStripButtonEditUser";
-            this.toolStripButtonEditUser.Size = new System.Drawing.Size(119, 22);
-            this.toolStripButtonEditUser.Text = "Редактировать";
-            this.toolStripButtonEditUser.Click += new System.EventHandler(this.toolStripButtonEditUser_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonDelUser
-            // 
-            this.toolStripButtonDelUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(173)))), ((int)(((byte)(168)))));
-            this.toolStripButtonDelUser.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelUser.Image")));
-            this.toolStripButtonDelUser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelUser.Name = "toolStripButtonDelUser";
-            this.toolStripButtonDelUser.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButtonDelUser.Text = "Удалить";
-            this.toolStripButtonDelUser.Click += new System.EventHandler(this.toolStripButtonDelUser_Click);
-            // 
             // dataGridViewUsers
             // 
+            this.dataGridViewUsers.AllowUserToAddRows = false;
             this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsers.Location = new System.Drawing.Point(0, 1);
             this.dataGridViewUsers.Name = "dataGridViewUsers";
@@ -286,11 +254,7 @@
             this.toolStripEmployeesActions.Font = new System.Drawing.Font("Roboto", 9.25F);
             this.toolStripEmployeesActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
-            this.toolStripButtonAddEmployees,
-            this.toolStripSeparator6,
-            this.toolStripButtonEditEmployees,
-            this.toolStripSeparator7,
-            this.toolStripButtonDelEmployees});
+            this.toolStripButtonAddEmployees});
             this.toolStripEmployeesActions.Location = new System.Drawing.Point(3, 369);
             this.toolStripEmployeesActions.Name = "toolStripEmployeesActions";
             this.toolStripEmployeesActions.Size = new System.Drawing.Size(786, 25);
@@ -312,36 +276,6 @@
             this.toolStripButtonAddEmployees.Size = new System.Drawing.Size(86, 22);
             this.toolStripButtonAddEmployees.Text = "Добавить";
             this.toolStripButtonAddEmployees.Click += new System.EventHandler(this.toolStripButtonAddEmployees_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonEditEmployees
-            // 
-            this.toolStripButtonEditEmployees.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(217)))), ((int)(((byte)(255)))));
-            this.toolStripButtonEditEmployees.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditEmployees.Image")));
-            this.toolStripButtonEditEmployees.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEditEmployees.Name = "toolStripButtonEditEmployees";
-            this.toolStripButtonEditEmployees.Size = new System.Drawing.Size(119, 22);
-            this.toolStripButtonEditEmployees.Text = "Редактировать";
-            this.toolStripButtonEditEmployees.Click += new System.EventHandler(this.toolStripButtonEditEmployees_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonDelEmployees
-            // 
-            this.toolStripButtonDelEmployees.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(173)))), ((int)(((byte)(168)))));
-            this.toolStripButtonDelEmployees.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelEmployees.Image")));
-            this.toolStripButtonDelEmployees.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelEmployees.Name = "toolStripButtonDelEmployees";
-            this.toolStripButtonDelEmployees.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButtonDelEmployees.Text = "Удалить";
-            this.toolStripButtonDelEmployees.Click += new System.EventHandler(this.toolStripButtonDelEmployees_Click);
             // 
             // dataGridViewEmployees
             // 
@@ -368,11 +302,7 @@
             this.toolStripDepartmentsActions.Font = new System.Drawing.Font("Roboto", 9.25F);
             this.toolStripDepartmentsActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel3,
-            this.toolStripButtonAddDepartments,
-            this.toolStripSeparator8,
-            this.toolStripButtonEditDepartments,
-            this.toolStripSeparator9,
-            this.toolStripButtonDelDepartments});
+            this.toolStripButtonAddDepartments});
             this.toolStripDepartmentsActions.Location = new System.Drawing.Point(0, 372);
             this.toolStripDepartmentsActions.Name = "toolStripDepartmentsActions";
             this.toolStripDepartmentsActions.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -396,36 +326,6 @@
             this.toolStripButtonAddDepartments.Text = "Добавить";
             this.toolStripButtonAddDepartments.Click += new System.EventHandler(this.toolStripButtonAddDepartments_Click);
             // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonEditDepartments
-            // 
-            this.toolStripButtonEditDepartments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(217)))), ((int)(((byte)(255)))));
-            this.toolStripButtonEditDepartments.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditDepartments.Image")));
-            this.toolStripButtonEditDepartments.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEditDepartments.Name = "toolStripButtonEditDepartments";
-            this.toolStripButtonEditDepartments.Size = new System.Drawing.Size(119, 22);
-            this.toolStripButtonEditDepartments.Text = "Редактировать";
-            this.toolStripButtonEditDepartments.Click += new System.EventHandler(this.toolStripButtonEditDepartments_Click);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonDelDepartments
-            // 
-            this.toolStripButtonDelDepartments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(173)))), ((int)(((byte)(168)))));
-            this.toolStripButtonDelDepartments.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelDepartments.Image")));
-            this.toolStripButtonDelDepartments.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelDepartments.Name = "toolStripButtonDelDepartments";
-            this.toolStripButtonDelDepartments.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButtonDelDepartments.Text = "Удалить";
-            this.toolStripButtonDelDepartments.Click += new System.EventHandler(this.toolStripButtonDelDepartments_Click);
-            // 
             // dataGridViewDepartments
             // 
             this.dataGridViewDepartments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -445,22 +345,13 @@
             this.tabPageRoles.Text = "Роли";
             this.tabPageRoles.UseVisualStyleBackColor = true;
             // 
-            // toolStripRolesActions
+            // dataGridViewRoles
             // 
-            this.toolStripRolesActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStripRolesActions.Font = new System.Drawing.Font("Roboto", 9.25F);
-            this.toolStripRolesActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel4,
-            this.toolStripButtonAddRoles,
-            this.toolStripSeparator10,
-            this.toolStripButtonEditRoles,
-            this.toolStripSeparator11,
-            this.toolStripButtonDelRoles});
-            this.toolStripRolesActions.Location = new System.Drawing.Point(0, 372);
-            this.toolStripRolesActions.Name = "toolStripRolesActions";
-            this.toolStripRolesActions.Size = new System.Drawing.Size(792, 25);
-            this.toolStripRolesActions.TabIndex = 10;
-            this.toolStripRolesActions.Text = "toolStrip2";
+            this.dataGridViewRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewRoles.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewRoles.Name = "dataGridViewRoles";
+            this.dataGridViewRoles.Size = new System.Drawing.Size(792, 366);
+            this.dataGridViewRoles.TabIndex = 9;
             // 
             // toolStripLabel4
             // 
@@ -478,60 +369,18 @@
             this.toolStripButtonAddRoles.Text = "Добавить";
             this.toolStripButtonAddRoles.Click += new System.EventHandler(this.toolStripButtonAddRoles_Click);
             // 
-            // toolStripSeparator10
+            // toolStripRolesActions
             // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonEditRoles
-            // 
-            this.toolStripButtonEditRoles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(217)))), ((int)(((byte)(255)))));
-            this.toolStripButtonEditRoles.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEditRoles.Image")));
-            this.toolStripButtonEditRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonEditRoles.Name = "toolStripButtonEditRoles";
-            this.toolStripButtonEditRoles.Size = new System.Drawing.Size(119, 22);
-            this.toolStripButtonEditRoles.Text = "Редактировать";
-            this.toolStripButtonEditRoles.Click += new System.EventHandler(this.toolStripButtonEditRoles_Click);
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonDelRoles
-            // 
-            this.toolStripButtonDelRoles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(173)))), ((int)(((byte)(168)))));
-            this.toolStripButtonDelRoles.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelRoles.Image")));
-            this.toolStripButtonDelRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelRoles.Name = "toolStripButtonDelRoles";
-            this.toolStripButtonDelRoles.Size = new System.Drawing.Size(78, 22);
-            this.toolStripButtonDelRoles.Text = "Удалить";
-            this.toolStripButtonDelRoles.Click += new System.EventHandler(this.toolStripButtonDelRoles_Click);
-            // 
-            // dataGridViewRoles
-            // 
-            this.dataGridViewRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewRoles.Location = new System.Drawing.Point(0, 0);
-            this.dataGridViewRoles.Name = "dataGridViewRoles";
-            this.dataGridViewRoles.Size = new System.Drawing.Size(792, 366);
-            this.dataGridViewRoles.TabIndex = 9;
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonExit
-            // 
-            this.toolStripButtonExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonExit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonExit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExit.Image")));
-            this.toolStripButtonExit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonExit.Name = "toolStripButtonExit";
-            this.toolStripButtonExit.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButtonExit.Text = "Выйти";
-            this.toolStripButtonExit.Click += new System.EventHandler(this.toolStripButtonExit_Click);
+            this.toolStripRolesActions.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStripRolesActions.Font = new System.Drawing.Font("Roboto", 9.25F);
+            this.toolStripRolesActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel4,
+            this.toolStripButtonAddRoles});
+            this.toolStripRolesActions.Location = new System.Drawing.Point(0, 372);
+            this.toolStripRolesActions.Name = "toolStripRolesActions";
+            this.toolStripRolesActions.Size = new System.Drawing.Size(792, 25);
+            this.toolStripRolesActions.TabIndex = 10;
+            this.toolStripRolesActions.Text = "toolStrip2";
             // 
             // EmployeesForm
             // 
@@ -565,9 +414,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDepartments)).EndInit();
             this.tabPageRoles.ResumeLayout(false);
             this.tabPageRoles.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).EndInit();
             this.toolStripRolesActions.ResumeLayout(false);
             this.toolStripRolesActions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -589,39 +438,23 @@
         private System.Windows.Forms.TabPage tabPageEmployees;
         private System.Windows.Forms.TabPage tabPageDepartments;
         private System.Windows.Forms.TabPage tabPageRoles;
-        private System.Windows.Forms.ToolStrip toolStripUsersActions;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAddUser;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton toolStripButtonEditUser;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelUser;
         private System.Windows.Forms.DataGridView dataGridViewUsers;
         private System.Windows.Forms.ToolStrip toolStripEmployeesActions;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAddEmployees;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripButton toolStripButtonEditEmployees;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelEmployees;
         private System.Windows.Forms.DataGridView dataGridViewEmployees;
         private System.Windows.Forms.ToolStrip toolStripDepartmentsActions;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripButton toolStripButtonAddDepartments;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripButton toolStripButtonEditDepartments;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelDepartments;
         private System.Windows.Forms.DataGridView dataGridViewDepartments;
-        private System.Windows.Forms.ToolStrip toolStripRolesActions;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAddRoles;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        private System.Windows.Forms.ToolStripButton toolStripButtonEditRoles;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelRoles;
         private System.Windows.Forms.DataGridView dataGridViewRoles;
         private System.Windows.Forms.ToolStripButton toolStripButtonExit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStrip toolStripUsersActions;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAddUser;
+        private System.Windows.Forms.ToolStrip toolStripRolesActions;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAddRoles;
     }
 }

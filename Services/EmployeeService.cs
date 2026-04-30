@@ -95,6 +95,40 @@ namespace EquipmentAccounting.Services
             DbHelper.ExecuteNonQuery(query,
                 new SqlParameter("@UserID", userId));
         }
+        
+        // ===================== EMPLOYEES =====================
+
+        public bool CanDeleteEmployee(int employeeId, out string reason)
+        {
+            if (ExistsInTable("Users", "EmployeeID", employeeId))
+            {
+                reason = "Нельзя удалить сотрудника: он указан у пользователя.";
+                return false;
+            }
+
+            if (ExistsInTable("Equipment", "EmployeeID", employeeId))
+            {
+                reason = "Нельзя удалить сотрудника: он указан у оборудования.";
+                return false;
+            }
+
+            if (ExistsInTable("Operations", "EmployeeID", employeeId))
+            {
+                reason = "Нельзя удалить сотрудника: он указан в операциях.";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public void DeleteEmployeeSafe(int employeeId)
+        {
+            if (!CanDeleteEmployee(employeeId, out string reason))
+                throw new InvalidOperationException(reason);
+
+            DeleteEmployee(employeeId);
+        }
 
         // Получаем всех сотрудников -> возвращаем таблицу
         public DataTable GetEmployees()
@@ -151,6 +185,41 @@ namespace EquipmentAccounting.Services
             DbHelper.ExecuteNonQuery(query,
                 new SqlParameter("@EmployeeID", employeeId));
         }
+        
+        // ===================== DEPARTMENTS =====================
+
+        public bool CanDeleteDepartment(int departmentId, out string reason)
+        {
+            if (ExistsInTable("Employees", "DepartmentID", departmentId))
+            {
+                reason = "Нельзя удалить отдел: он используется у сотрудников.";
+                return false;
+            }
+
+            if (ExistsInTable("Equipment", "DepartmentID", departmentId))
+            {
+                reason = "Нельзя удалить отдел: он указан у оборудования.";
+                return false;
+            }
+
+            if (ExistsInTable("Operations", "FromDepartmentID", departmentId) ||
+                ExistsInTable("Operations", "ToDepartmentID", departmentId))
+            {
+                reason = "Нельзя удалить отдел: он используется в операциях.";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public void DeleteDepartmentSafe(int departmentId)
+        {
+            if (!CanDeleteDepartment(departmentId, out string reason))
+                throw new InvalidOperationException(reason);
+
+            DeleteDepartment(departmentId);
+        }
 
         // Получаем все отделы -> возвращаем таблицу
         public DataTable GetDepartments()
@@ -196,6 +265,28 @@ namespace EquipmentAccounting.Services
                 new SqlParameter("@DepartmentID", departmentId));
         }
 
+        // ===================== ROLES =====================
+
+        public bool CanDeleteRole(int roleId, out string reason)
+        {
+            if (ExistsInTable("Users", "RoleID", roleId))
+            {
+                reason = "Нельзя удалить роль: она используется у пользователей.";
+                return false;
+            }
+
+            reason = null;
+            return true;
+        }
+
+        public void DeleteRoleSafe(int roleId)
+        {
+            if (!CanDeleteRole(roleId, out string reason))
+                throw new InvalidOperationException(reason);
+
+            DeleteRole(roleId);
+        }
+
         // Получаем все роли -> возвращаем таблицу
         public DataTable GetRoles()
         {
@@ -238,6 +329,21 @@ namespace EquipmentAccounting.Services
 
             DbHelper.ExecuteNonQuery(query,
                 new SqlParameter("@RoleID", roleId));
+        }
+
+        // ===================== HELPER =====================
+
+        private bool ExistsInTable(string tableName, string columnName, int id)
+        {
+            string query = $@"
+            SELECT COUNT(*)
+            FROM {tableName}
+            WHERE {columnName} = @Id";
+
+            object result = DbHelper.ExecuteScalar(query,
+                new SqlParameter("@Id", id));
+
+            return Convert.ToInt32(result) > 0;
         }
     }
 }

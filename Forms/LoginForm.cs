@@ -15,6 +15,12 @@ namespace EquipmentAccounting.Forms
 {
     public partial class LoginForm : Form
     {
+        public enum Roles
+        {
+            Admin = 1,
+            User = 2
+        }
+
         public LoginForm()
         {
             InitializeComponent();
@@ -36,14 +42,24 @@ namespace EquipmentAccounting.Forms
 
             if (user != null)
             {
-                MessageBox.Show("Вход выполнен");
-                
-                this.Hide();
+                if (user.RoleID != (int)Roles.Admin)
+                {
+                    this.Hide();
 
-                var mainForm = new MainForm(user);
-                mainForm.ShowDialog();
+                    var operationsForm = new OperationsForm(user);
+                    operationsForm.ShowDialog();
 
-                this.Close();
+                    this.Close();
+                }
+                else if (user.RoleID == (int)Roles.Admin)
+                {
+                    this.Hide();
+
+                    var mainForm = new MainForm(user);
+                    mainForm.ShowDialog();
+
+                    this.Close();
+                }
             }
             else
             {
